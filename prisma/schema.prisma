@@ -1,0 +1,81 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+
+enum Link_Status {
+  alive
+  dead
+}
+
+enum Difficulty {
+  beginner
+  intermediate
+  advanced
+}
+
+enum Status {
+  pending
+  verified
+  rejected
+}
+
+model Admin {
+  id                     String                @id @default(uuid())
+  username               String                @unique
+  email                  String                @unique
+  password               String
+  canInvite              Boolean               @default(false)
+  reviewed               Walkthrough[]         @relation("ReviewedBy")
+  added                  Walkthrough[]         @relation("AddedBy")
+}
+
+model AdminInvite {
+  id                     String                @id @default(uuid())
+  token                  String                @unique
+  used                   Boolean               @default(false)
+  canInvite              Boolean               @default(false)
+  expiresAt              DateTime
+  createdBy              String
+  createdAt              DateTime              @default(now())
+}
+
+model Walkthrough {
+  id                     String                @id @default(uuid())
+  title                  String
+  description            String
+  link                   String                @unique
+  link_status            Link_Status           @default(alive)
+  last_checked_at        DateTime
+  quality_score          Int
+  archived_snapshot_link String
+  difficulty             Difficulty
+  status                 Status                @default(pending)
+  addedBy                Admin                 @relation("AddedBy", fields: [added_by], references: [id])
+  added_by               String
+  reviewedBy             Admin?                @relation("ReviewedBy", fields: [reviewed_by], references: [id])
+  reviewed_by            String?
+  updatedAt              DateTime              @updatedAt
+  createdAt              DateTime              @default(now())
+  categories             WalkthroughCategory[]
+}
+
+model Category {
+  id                     String                @id @default(uuid())
+  name                   String                @unique
+  walkthroughs WalkthroughCategory[]
+}
+
+model WalkthroughCategory {
+  walkthrough_id         String
+  category_id            String
+  walkthrough            Walkthrough           @relation(fields: [walkthrough_id], references: [id])
+  category               Category              @relation(fields: [category_id], references: [id])
+
+  @@id([walkthrough_id, category_id])
+}

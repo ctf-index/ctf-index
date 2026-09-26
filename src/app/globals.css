@@ -1,26 +1,56 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0B0D11;
+  --foreground: #F3F4F6;
+  --surface: #14171F;
+  --surface-hover: #1A1E29;
+  --border: #222735;
+  --border-focus: #353D52;
+  --accent: #10B981;
+  --accent-hover: #059669;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
+  --color-border-subtle: var(--border);
+  --color-border-focus: var(--border-focus);
+  --color-accent: var(--accent);
+  --font-sans: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: var(--font-geist-mono), monospace;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #0B0D11;
+  color: #F3F4F6;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom Scrollbar for sleek Linear aesthetic */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0B0D11;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #222735;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #353D52;
+}
+
+/* Range input accent styling */
+input[type="range"] {
+  accent-color: #10B981;
 }

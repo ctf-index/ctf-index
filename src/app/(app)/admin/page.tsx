@@ -1,15 +1,5 @@
-"use client"
+import { redirect } from "next/navigation";
 
-
-const page = () => {
-  
-  return (
-    <div className="">admin 
-    <div className="">
-      
-    </div>
-    </div>
-  )
+export default function AdminPage() {
+  redirect("/admin/review");
 }
-
-export default page
